@@ -111,7 +111,8 @@ h2 {
     filter: brightness(1.1);
 }
 
-.deal_banner {
+.deal_banner::before {
+    content: "Deal";
     position: absolute;
     top: 10px;
     left: 10px;
@@ -124,7 +125,8 @@ h2 {
     text-transform: uppercase;
 }
 
-.soldout_banner {
+.soldout_banner::before {
+    content: "Sold Out";
     position: absolute;
     top: 10px;
     left: 10px;
@@ -172,7 +174,7 @@ img {
 }
 
 
-.soldout img {
+.soldout_img {
     opacity: 0.3;
 }
 
