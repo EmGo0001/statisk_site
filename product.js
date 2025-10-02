@@ -9,6 +9,8 @@ fetch(`https://kea-alt-del.dk/t7/api/products/${id}`)
 function showProduct(product){
 console.log(id);
 
+
+
 productContainer.innerHTML = `<div>
           <img
             src="https://kea-alt-del.dk/t7/images/webp/640/${id}.webp"
@@ -16,6 +18,7 @@ productContainer.innerHTML = `<div>
           />
         </div>
         <div>
+        
         <h1>${product.productdisplayname}</h1>
           <h2>Product information</h2>
             
