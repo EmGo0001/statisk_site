@@ -1,17 +1,52 @@
-const productlistContainer  = document.querySelector(".product_list_container");
-
 const params = new URLSearchParams(window.location.search);
 const category = params .get("category");
 const header = document.querySelector("h2").textContent=category
 
+const productlistContainer  = document.querySelector(".product_list_container");
+
+document.querySelector(".filters").addEventListener("click", showFiltered);
+
+document.querySelector(".sorting").addEventListener("click", showSorted);
+
+function showSorted(event) {
+    const direction = event.target.dataset.direction;
+    if (direction == "lohi") {
+        currentDataSet.sort((a, b) => a.price - b.price);
+    } else {
+        currentDataSet.sort((a, b) => b.price - a.price);
+    }
+    showProducts(currentDataSet);
+}
+
+function showFiltered(event) {
+    console.log(event.target.dataset.gender);
+    const gender = event.target.dataset.gender;
+    if (gender == "All") {
+        currentDataSet = allData;
+    } else {
+        const udsnit = allData.filter(product => product.gender == gender);
+        currentDataSet = udsnit;
+    }
+    showProducts(currentDataSet);
+}
+
+let allData, currentDataSet;
+
+
 fetch(`https://kea-alt-del.dk/t7/api/products?limit=48&category=${category}`)
 .then(response => response.json())
-.then(data => showProducts(data))
+.then(data => {
+    allData = currentDataSet = data;
+    showProducts(allData);
+});
+
 
 function showProducts(products) {
+    console.log(products);
+    productlistContainer.innerHTML ="";
   products.forEach((element) => {
+    console.log(element);
     let discountHTML = "";
-
     if (element.discount > 0) {
       const discountPrice = Math.round(
         element.price - element.price * (element.discount / 100)
@@ -30,8 +65,7 @@ function showProducts(products) {
         </div>`;
     }
 
-    productlistContainer.innerHTML += `
-      <article class="product">
+    productlistContainer.innerHTML += `<article class="product">
         <a href="product.html?id=${element.id}">
           <div class="image_container">
             <img
